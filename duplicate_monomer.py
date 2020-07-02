@@ -21,7 +21,7 @@ def achieve_lenght(fasta, lenght):
         for record in SeqIO.parse(original_file, "fasta"):        
             while len(record.seq)< lenght:
                 record.seq = record.seq + record.seq
-        SeqIO.write(record, duplicated, "fasta")
+            SeqIO.write(record, duplicated, "fasta")
 
 def rename_headers(fastq_file, word):
     original_file = fastq_file
