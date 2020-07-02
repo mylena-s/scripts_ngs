@@ -19,8 +19,9 @@ def achieve_lenght(fasta, lenght):
     original_file, duplicated_file = manipulate_files(fasta)
     with open(original_file), open(duplicated_file, "w") as duplicated:
         for record in SeqIO.parse(original_file, "fasta"):        
+            monomer = record.seq
             while len(record.seq)< lenght:
-                record.seq = record.seq + record.seq
+                record.seq = record.seq + monomer
             SeqIO.write(record, duplicated, "fasta")
 
 def rename_headers(fastq_file, word):
