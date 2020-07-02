@@ -22,19 +22,31 @@ def achieve_lenght(fasta, lenght):
             while len(record.seq)< lenght:
                 record.seq = record.seq + record.seq
         SeqIO.write(record, duplicated, "fasta")
-   
+
+def rename_headers(fastq_file, word):
+    original_file = fastq_file
+    corrected_file = fastq_file.split(".")[0]+"renamed"
+
+    with open(original_file), open(corrected_file, "w") as corrected:
+        for record in SeqIO.parse(original_file, "fasta"):        
+            record.id = record.id + word + "/" + record.id.split("-")[0]+"-"+ record.id.split("-")[1]+"-" + record.id.split("-")[2]
+            record.description= ""
+            SeqIO.write(record, corrected, "fasta")
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="This script duplicates N times each record inside a fasta file", epilog= "contact: mylena.santander@usp.br")
+    parser = argparse.ArgumentParser(description="This script duplicates N times each record inside a fasta file. If argument -w is used, this script also adds a word in each id in RepeatMasker library format")
     parser.add_argument("-f", "--file", type=str, required=True, help="specify the fasta file", metavar="")
     parser.add_argument("-n", "--number", type=int, default= 2, help="number of times to duplicate monomer (default =2)", metavar="")
     parser.add_argument("-t", "--type", type=int, default= 1, choices= [1, 2], help="running mode: 1= duplicate n times (used with -n), 2=duplicate to reach lenght (used with -l)", metavar="")
     parser.add_argument("-l", "--lenght", type=int, default=1, help="specify the minimun lenght that you want to achieve by duplicating", metavar="")
+    parser.add_argument("-w", "--word", type=str, required=False, help="specify a string to be added to the sequence id. Example: #Unknown, #Satellite", metavar="")
 
     args = parser.parse_args()
     fasta  = args.file
     n = args.number
     mode = args.type
     lenght = args.lenght
+    word= args.word
     
     if mode == 1:
         duplicate_monomer(fasta, n)
@@ -43,4 +55,9 @@ if __name__ == "__main__":
             print("Monomer will not be duplicated since no lenght was specified")
         else:
             achieve_lenght(fasta, lenght)
-    print("Done! Thanks!")
+
+    if word != None:
+        rename_headers(("duplicated_" + fasta), word)
+        
+    print("""Done! Thanks!
+contact: mylena.santander@usp.br""")
