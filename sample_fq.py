@@ -39,7 +39,7 @@ def main(n_reads, fastq1, fastq2, output_prefix):
     print("Converting to fasta format")
     n_bases=str(count_bases(output_prefix+"_concatenated.subset.fastq", "fastq"))
     print("Total number of bases in file: "+n_bases)
-    call(fastq_to_fasta(output_prefix + "_concatenated_"+n_bases+".subset.fastq", output_prefix), shell=True)
+    call(fastq_to_fasta(output_prefix + "_concatenated.subset.fastq", output_prefix+"_"+n_bases), shell=True)
     print("Removing temporary files")
     call(("rm "+ output_prefix+"_1.subset.fastq"), shell=True)
     call(("rm "+ output_prefix+"_2.subset.fastq"), shell=True)
