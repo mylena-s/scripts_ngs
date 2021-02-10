@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import sys, os
 from Bio import SeqIO
@@ -19,9 +19,12 @@ def achieve_lenght(fasta, lenght):
     original_file, duplicated_file = manipulate_files(fasta)
     with open(original_file), open(duplicated_file, "w") as duplicated:
         for record in SeqIO.parse(original_file, "fasta"):        
-            monomer = record.seq
-            while len(record.seq)< lenght:
-                record.seq = record.seq + monomer
+            monomer= record.seq
+            if len(monomer) >= lenght:
+                record.seq=record.seq+record.seq
+            else:
+                while len(record.seq)< lenght:
+                    record.seq = record.seq + monomer
             SeqIO.write(record, duplicated, "fasta")
 
 def rename_headers(fastq_file, word):
@@ -30,7 +33,7 @@ def rename_headers(fastq_file, word):
 
     with open(original_file), open(corrected_file, "w") as corrected:
         for record in SeqIO.parse(original_file, "fasta"):        
-            record.id = record.id + word + "/" + record.id.split("-")[0]+"-"+ record.id.split("-")[1]+"-" + record.id.split("-")[2]
+            record.id = record.id + word + "/" + record.id
             record.description= ""
             SeqIO.write(record, corrected, "fasta")
 
