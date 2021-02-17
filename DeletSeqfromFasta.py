@@ -30,8 +30,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     fasta_file= args.file
     blast_output=args.blast
-    new_fasta = fasta_file.split(".")[0]+"_blast.filtered.fasta"
-    new_fasta2 = fasta_file.split(".")[0]+"_blast.removedseq.fasta"
+    new_fasta = fasta_file.split(".")[0]+".filtered.fasta"
+    new_fasta2 = fasta_file.split(".")[0]+".removedseq.fasta"
     #running program
     set_blast=isolate_first_column(blast_output)
     remove_sequences(fasta_file, set_blast, new_fasta, new_fasta2)
