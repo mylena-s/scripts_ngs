@@ -24,7 +24,7 @@ def remove_sequences(fasta_file, set_blast, new_fasta, new_fasta2):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="This script removes sequences found in a table's first column (such as query in blast output format 6)")
     parser.add_argument("-f", "--file", type=str, required=True, help="specify the fasta file", metavar="")
-    parser.add_argument("-t", "--table", type=str, required=True, help="specify table or list with one seq id per line. If table is a blast .out must be format [6 qseqid qlen sseqid slen evalue bitscore length salltitles]", metavar="")
+    parser.add_argument("-b", "--blast", type=str, required=True, help="specify table or list with one seq id per line. If list is used, each line should end in \t\n. If table is a blast .out must be format separated by tabs ex. [6 qseqid qlen sseqid slen evalue bitscore length salltitles]", metavar="")
 
     #defining variables names
     args = parser.parse_args()
