@@ -3,7 +3,8 @@ import sys, os
 from subprocess import call
 import pandas as pd
 
-
+"""This script renames files in a directory, following a csv table with two tab separated columns: old_name new_name
+Dependencies: Pandas. Please make sure you have a backup of the files, the action is irreversible."""
 
 def read_table(table):
     df = pd.read_csv(table, sep="\t")
